@@ -512,9 +512,83 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 
+/* ============ GIÁ & RATE ============ */
+.curbtn{display:block;width:100%;margin-top:10px;padding:11px;border:.5px dashed var(--line);
+  border-radius:2px;font-family:'VT323',monospace;font-size:15px;letter-spacing:.16em;
+  color:var(--faint);transition:color .2s,border-color .2s}
+@media (hover:hover){.curbtn:hover{color:var(--brand);border-color:var(--brand-line)}}
+.hero.small{font-size:44px;letter-spacing:-.02em}
+@media (min-width:760px){.hero.small{font-size:60px}}
+@media (min-width:1080px){.hero.small{font-size:74px}}
+.herosub{font-size:14px;color:var(--muted);margin-top:10px}
+.sumrow{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:12px 0;border-bottom:.5px solid var(--line)}
+.sumrow span{font-size:14px;color:var(--muted)}
+.sumrow b{font-family:'VT323',monospace;font-size:22px;color:var(--ink)}
+.pricecard{border:.5px solid var(--line);border-radius:2px;padding:24px;background:var(--surf)}
+.ptable{margin:6px 0 18px}
+.prow{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:10px 0;
+  border-bottom:.5px solid var(--line)}
+.prow span{font-size:14px;color:var(--muted)}
+.prow b{font-family:'VT323',monospace;font-size:20px;color:var(--ink);white-space:nowrap}
+.prow.big{border-bottom:0;border-top:.5px solid var(--brand-line);margin-top:6px;padding-top:14px}
+.prow.big span{color:var(--ink);font-weight:600}
+.prow.big b{color:var(--brand);font-size:24px}
+.pinputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.pinputs.one{grid-template-columns:1fr}
+.pin{display:block}
+.pin span{display:block;font-family:'VT323',monospace;font-size:15px;letter-spacing:.14em;
+  color:var(--faint);margin-bottom:7px}
+.pin input{width:100%;background:var(--surf-2);border:.5px solid var(--line);border-radius:2px;
+  padding:13px;font-family:'VT323',monospace;font-size:19px;color:var(--ink)}
+.pin input:focus{outline:none;border-color:var(--brand-line)}
+.bigprice{background:var(--brand-wash);border:.5px solid var(--brand-line);border-radius:2px;
+  padding:22px;margin-bottom:18px;text-align:center}
+.bigprice .bp{font-family:'Archivo',sans-serif;font-weight:900;font-size:34px;
+  letter-spacing:-.03em;color:var(--brand);margin-top:8px}
+@media (min-width:1080px){.bigprice .bp{font-size:46px}}
+.gtable{border:.5px solid var(--line);border-radius:2px;overflow-x:auto}
+.gr{display:grid;grid-template-columns:130px repeat(4,minmax(92px,1fr));
+  border-bottom:.5px solid var(--line);min-width:560px}
+.gr:last-child{border-bottom:0}
+.gr.gh span{font-family:'VT323',monospace;font-size:15px;letter-spacing:.12em;color:var(--faint);
+  padding:12px 10px;background:var(--surf-2)}
+.gr>span{padding:8px 10px;display:flex;align-items:center}
+.gn{font-weight:700;font-size:14px}
+.gr input{width:100%;background:var(--surf-2);border:.5px solid var(--line);border-radius:2px;
+  padding:9px;font-family:'VT323',monospace;font-size:18px;color:var(--ink);text-align:center}
+.gr input:focus{outline:none;border-color:var(--brand-line)}
+.chk{display:flex;align-items:center;gap:11px;background:var(--surf);border:.5px solid var(--line);
+  border-radius:2px;padding:16px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--brand)}
+.chk span{font-size:14px;color:var(--muted)}
+.minitag.rush{background:#3A1E16;color:var(--alert);margin-right:6px}
+.pmoney{font-family:'VT323',monospace;font-size:22px;color:var(--brand);margin-left:auto;
+  white-space:nowrap}
+.paynote.paid .pmoney{color:var(--ok)}
+.thanks .t3{font-family:'VT323',monospace;font-size:26px;color:var(--brand);margin-top:10px}
+.thanks.paid .t3{color:var(--ok)}
+.pamt{font-family:'VT323',monospace;font-size:19px;color:var(--brand);margin-left:auto;
+  white-space:nowrap}
+.pay.on .pamt{color:var(--ok)}
+@media (max-width:600px){.pinputs{grid-template-columns:1fr}}
+
+.warnbar{margin-top:10px;padding:12px 14px;border:.5px solid var(--brand-line);
+  background:var(--brand-wash);border-radius:2px;font-size:13px;color:var(--brand)}
+
+/* ô nhập tiền công cho từng người */
+.amt{display:block;margin-top:14px}
+.amt .lb{margin-bottom:8px}
+.amt input{width:100%;background:var(--surf-2);border:.5px solid var(--line);border-radius:2px;
+  padding:14px 16px;font-family:'VT323',monospace;font-size:22px;color:var(--brand);
+  letter-spacing:.06em}
+.amt input::placeholder{color:var(--faint);font-size:18px;letter-spacing:.14em}
+.amt input:focus{outline:none;border-color:var(--brand-line)}
+
 </style>
 </head>
 <body>
+
 
 
 
@@ -607,6 +681,8 @@ const SCLS={'Tách khớp':'tk','Animation':'an','Character design':'cd','Item d
 const STATUS=[{k:'Pending',c:'pd'},{k:'Đang làm',c:'go'},{k:'Chờ feedback nội bộ',c:'fb'},
               {k:'Đang sửa theo feedback',c:'fx'},{k:'Chờ khách duyệt',c:'cl'},{k:'Đã xong',c:'ok'}];
 const SCOL={pd:'pend',go:'brand',fb:'alert',fx:'violet',cl:'blue',ok:'ok'};
+const TIERS=['Đơn giản','Trung bình','Phức tạp'];
+let CUR='VND';
 
 const mem={};
 const store={
@@ -617,7 +693,7 @@ const store={
 
 let mode=null, token=null, jwt=null, me=null, D=null;
 let rev=0, polling=false, ownerView='team', pickedName=null;
-let memView='active'; const openDone={};
+let memView='active'; const openDone={}; let priceReady=true;
 let editing=null, editLink=null, editProj=null, editMb=null;
 
 function hdr(){
@@ -665,6 +741,10 @@ function leftTxt(dl){const d=dTo(dl);
 const stc=k=>(STATUS.find(s=>s.k===k)||{}).c||'';
 function host(u){try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return u}}
 const val=id=>document.getElementById(id).value;
+function money(v){
+  if(v===null||v===undefined||v===''||isNaN(v))return '';
+  return Math.round(Number(v)).toLocaleString('vi-VN')+'₫';
+}
 
 /* ---------- cổng đăng nhập ---------- */
 function gate(html){document.getElementById('gate-body').innerHTML=html;
@@ -857,6 +937,7 @@ async function togglePay(pid,mid,cur){
   try{
     await db('payments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},
       body:JSON.stringify({project_id:pid,member_id:mid,paid:!cur,
+        amount:payAmount(pid,mid),
         paid_at:!cur?new Date().toISOString():null})});
     await addHist(pid,(!cur?'Đã thanh toán':'Bỏ đánh dấu thanh toán')+' cho '+mName(mid));
     await reload();
@@ -923,10 +1004,12 @@ function pheadHTML(p,owner){
     '</div></div>'+
     (owner?'<button class="hlink" onclick="openHist(\''+p.id+'\')">LỊCH SỬ LÀM VIỆC ›</button>':'');
 }
-function thanksHTML(paid){
+function thanksHTML(paid,amount){
+  const m=(amount!==undefined&&Number(amount)>0)?
+    '<div class="t3">'+money(Number(amount))+'</div>':'';
   return '<div class="thanks'+(paid?' paid':'')+'">'+
     '<div class="tk"><div class="t1">🎉 '+(paid?'Đã thanh toán':'Đã hoàn thành')+'</div>'+
-    '<div class="t2">Cảm ơn bạn đã giúp Khỉ &lt;3</div></div>'+
+    '<div class="t2">Cảm ơn bạn đã giúp Khỉ &lt;3</div>'+m+'</div>'+
     '<span class="paypill'+(paid?' paid':'')+'">'+(paid?'✓ ĐÃ NHẬN TIỀN':'⏳ CHỜ CHUYỂN KHOẢN')+'</span></div>';
 }
 function filesBlock(pid,owner){
@@ -959,7 +1042,8 @@ function memTabs(){
   const a=D.projects.length, b=(D.done_projects||[]).length;
   return '<div class="obar two">'+
     '<button aria-pressed="'+(memView==='active')+'" onclick="setMemView(\'active\')">ĐANG THAM GIA · '+a+'</button>'+
-    '<button aria-pressed="'+(memView==='done')+'" onclick="setMemView(\'done\')">ĐÃ HOÀN THÀNH · '+b+'</button></div>';
+    '<button aria-pressed="'+(memView==='done')+'" onclick="setMemView(\'done\')">ĐÃ HOÀN THÀNH · '+b+'</button></div>'+
+    '<button class="curbtn" onclick="toggleCur()">ĐANG XEM THEO '+CUR+' — ĐỔI</button>';
 }
 function swapAnim(){const el=document.getElementById('body');
   el.classList.remove('anim'); void el.offsetWidth; el.classList.add('anim');}
@@ -988,10 +1072,12 @@ function renderMember(){
       const mine=ts.every(t=>t.status==='Đã xong');
       const paid=p.paid===true;
       let note='';
-      if(paid) note='<div class="paynote paid"><span>✓ ĐÃ NHẬN TIỀN</span>'+
+      const mm=(p.amount==null?0:Number(p.amount));
+      const mmTxt=mm>0?'<b class="pmoney">'+money(mm)+'</b>':'';
+      if(paid) note='<div class="paynote paid"><span>✓ ĐÃ NHẬN TIỀN</span>'+mmTxt+
         '<em>Cảm ơn bạn đã giúp Khỉ &lt;3<br>'+
         'DG Monkey đã thanh toán phần việc của bạn ở dự án này.</em></div>';
-      else if(mine) note='<div class="paynote"><span>⏳ CHỜ CHUYỂN KHOẢN</span>'+
+      else if(mine) note='<div class="paynote"><span>⏳ CHỜ CHUYỂN KHOẢN</span>'+mmTxt+
         '<em>Cảm ơn bạn đã giúp Khỉ &lt;3<br>'+
         'Bạn đã xong phần của mình. Dự án còn người khác nên chưa đóng.</em></div>';
       h+='<section class="proj">'+pheadHTML(p,false)+note+
@@ -1015,7 +1101,7 @@ function renderMember(){
           '<span class="dtag'+(p.paid?' paid':'')+'">'+(p.paid?'✓ ĐÃ NHẬN TIỀN':'⏳ CHỜ CHUYỂN KHOẢN')+'</span>'+
           '<span class="dch">'+(op?'−':'+')+'</span>'+
         '</button>'+
-        (op?'<div class="dbody">'+thanksHTML(p.paid)+
+        (op?'<div class="dbody">'+thanksHTML(p.paid,p.amount)+
             '<div class="cards">'+ts.map(t=>taskHTML(t,false)).join('')+'</div>'+
             filesBlock(p.id,false)+'</div>':
             '<div class="dmini">'+ts.length+' đầu việc · '+q+' item</div>')+
@@ -1032,14 +1118,52 @@ const pDone=pid=>{const ts=D.tasks.filter(t=>t.project_id===pid);
 const isPaid=(pid,mid)=>{const p=D.payments.find(x=>x.project_id===pid&&x.member_id===mid);
   return p?p.paid:false;};
 const mName=id=>{const m=D.members.find(x=>x.id===id);return m?m.name:'—';};
+function payRow(pid,mid){
+  return (D.payments||[]).find(x=>x.project_id===pid&&x.member_id===mid)||null;}
+function payAmount(pid,mid){const r=payRow(pid,mid);
+  return (r&&r.amount!=null)?Number(r.amount):null;}
+function priceOf(p){
+  const c=pc(p.id);
+  const cost=Number(c.cost), team=Number(c.team_cost);
+  const buf=(p.buffer==null?setg('buffer'):Number(p.buffer));
+  const mg =(p.margin==null?setg('margin'):Number(p.margin));
+  const bonus=team*Number(p.bonus_team||0)+cost*Number(p.bonus_extra||0);
+  const coef=(p.client_type==='VN')?setg('vn_rate'):1;
+  const base=(cost*(1+buf)+bonus)*coef;
+  const price=mg<1?base/(1-mg):base;
+  const payteam=team*(1+Number(p.bonus_team||0));
+  return {cost:cost,team:team,own:Number(c.own_cost),hours:Number(c.hours),
+    buf:buf,mg:mg,bonus:bonus,coef:coef,base:base,price:price,payteam:payteam,
+    mine:price-payteam, final:p.price_final==null?null:Number(p.price_final)};
+}
 const mRole=id=>{const m=D.members.find(x=>x.id===id);return m?m.role:'';};
+
+function amtBox(pid,mid){
+  const a=payAmount(pid,mid);
+  return '<label class="amt"><span class="lb">TIỀN CÔNG (VND)</span>'+
+    '<input type="text" inputmode="numeric" value="'+(a==null?'':a.toLocaleString('vi-VN'))+'" '+
+    'placeholder="chưa nhập" onchange="saveAmount(\''+pid+'\',\''+mid+'\',this.value)"></label>';
+}
+async function saveAmount(pid,mid,v){
+  const n=String(v).replace(/[^0-9]/g,'');
+  const amount=n===''?null:Number(n);
+  sync('busy');
+  try{
+    await db('payments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({project_id:pid,member_id:mid,amount:amount,
+        paid:isPaid(pid,mid)})});
+    await addHist(pid,'Đặt tiền công '+(amount==null?'(xoá)':money(amount))+' cho '+mName(mid));
+    await reload();
+  }catch(e){sync('off');alert('Không lưu được.');}
+}
 
 function renderOwner(){
   document.getElementById('ownerbar').innerHTML='<div class="obar">'+
     '<button aria-pressed="'+(ownerView==='team')+'" onclick="setOwnerView(\'team\')">TOÀN TEAM</button>'+
     '<button aria-pressed="'+(ownerView==='files')+'" onclick="setOwnerView(\'files\')">FILE</button>'+
     '<button aria-pressed="'+(ownerView==='arch')+'" onclick="setOwnerView(\'arch\')">ĐÃ XONG</button>'+
-    '<button aria-pressed="'+(ownerView==='mem')+'" onclick="setOwnerView(\'mem\')">NGƯỜI</button></div>';
+    '<button aria-pressed="'+(ownerView==='mem')+'" onclick="setOwnerView(\'mem\')">NGƯỜI</button>'+
+    '</div>';
   if(ownerView==='files')return renderFiles();
   if(ownerView==='arch')return renderArchive();
   if(ownerView==='mem')return renderMembers();
@@ -1058,8 +1182,10 @@ function renderOwner(){
       const qq=list.reduce((s,t)=>s+t.qty,0), dd=list.reduce((s,t)=>s+t.done,0);
       const stg=[...new Set(list.map(t=>t.stage))];
       const allDone=list.every(t=>t.status==='Đã xong');
+
       return '<article class="task'+(allDone?' done':'')+'">'+
         '<div class="thead"><span class="stage '+(SCLS[stg[0]]||'')+'">'+stg.join(' + ').toUpperCase()+'</span>'+
+
         (allDone?'<span class="minitag">XONG</span>':'')+
         '<span class="tct">'+dd+'/'+qq+'</span></div><div class="tbody">'+
         '<button class="mate lnk" onclick="ownerOpen(\''+p.id+'\',\''+mid+'\')">'+
@@ -1067,6 +1193,7 @@ function renderOwner(){
         '<span class="mi"><span class="mn">'+H(mName(mid))+'<u>'+H(mRole(mid)).toUpperCase()+'</u></span>'+
         '<span class="mb"><i class="b" style="width:'+(qq?(dd/qq*100).toFixed(1):0)+'%"></i></span></span>'+
         '<span class="mp">›</span></button>'+
+        amtBox(p.id,mid)+
         '<button class="pay'+(isPaid(p.id,mid)?' on':'')+'" onclick="togglePay(\''+p.id+'\',\''+mid+'\','+isPaid(p.id,mid)+')">'+
         '<i class="bx"></i><span>'+(isPaid(p.id,mid)?'ĐÃ THANH TOÁN':'CHƯA THANH TOÁN')+'</span></button>'+
         '</div></article>';
@@ -1108,7 +1235,9 @@ function renderArchive(){
       thanksHTML(mids.length>0&&unpaid.length===0)+
       '<div class="sub">'+mids.map(mid=>
         '<button class="pay wide'+(isPaid(p.id,mid)?' on':'')+'" onclick="togglePay(\''+p.id+'\',\''+mid+'\','+isPaid(p.id,mid)+')">'+
-        '<i class="bx"></i><span>'+H(mName(mid))+' — '+(isPaid(p.id,mid)?'ĐÃ THANH TOÁN':'CHƯA THANH TOÁN')+'</span></button>').join('')+
+        '<i class="bx"></i><span>'+H(mName(mid))+' — '+(isPaid(p.id,mid)?'ĐÃ THANH TOÁN':'CHƯA THANH TOÁN')+'</span>'+
+        (payAmount(p.id,mid)!=null?'<b class="pamt">'+money(payAmount(p.id,mid))+'</b>':'')+
+        '</button>').join('')+
       '</div></section>';
   });
   document.getElementById('body').innerHTML=h;
@@ -1136,6 +1265,7 @@ function renderMembers(){
   h+='</div>';
   document.getElementById('body').innerHTML=h;
 }
+
 
 function openHist(pid){
   const p=D.projects.find(x=>x.id===pid);
@@ -1183,6 +1313,7 @@ function fillSel(){
   document.getElementById('k-proj').innerHTML=D.projects.map(p=>'<option value="'+p.id+'">'+H(p.name)+'</option>').join('');
   document.getElementById('k-who').innerHTML=D.members.map(m=>'<option value="'+m.id+'">'+H(m.name)+'</option>').join('');
   document.getElementById('k-stage').innerHTML=STAGES.map(s=>'<option>'+s+'</option>').join('');
+
 }
 function openTk(id,pid){
   editing=id||null; fillSel();
@@ -1195,7 +1326,8 @@ function openTk(id,pid){
     document.getElementById('k-qty').value=t.qty;
     document.getElementById('k-who').value=t.member_id;
   }else{ if(pid)document.getElementById('k-proj').value=pid;
-    document.getElementById('k-item').value=''; document.getElementById('k-qty').value=1;}
+    document.getElementById('k-item').value=''; document.getElementById('k-qty').value=1;
+}
   document.getElementById('tksheet').classList.add('on');
 }
 function closeTk(){document.getElementById('tksheet').classList.remove('on');}
