@@ -136,17 +136,26 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
   color:var(--muted);transform:rotate(90deg);line-height:1}
 .nudgetxt{font-size:13px;color:var(--brand-dim);line-height:1.5;margin-top:11px}
 
-/* ---------- thanks banner ---------- */
-.thanks{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  background:var(--brand-wash);border:.5px solid var(--brand-line);border-radius:2px;
-  padding:24px 26px;margin-bottom:var(--card-gap)}
-.thanks.paid{background:var(--okbg);border-color:var(--ok-line)}
-.thanks .t1{font-weight:900;font-size:20px;letter-spacing:-.01em;color:var(--brand)}
-.thanks.paid .t1{color:var(--ok)}
-.thanks .t2{font-weight:500;font-size:15px;color:var(--muted);margin-top:6px}
-.paypill{background:var(--brand-deep);color:var(--brand);border-radius:2px;
-  padding:13px 22px;font-size:17px;letter-spacing:.2em;line-height:1;white-space:nowrap}
-.paypill.paid{background:var(--okdeep);color:var(--ok)}
+/* ---------- khối tiền ---------- */
+.paynote,.thanks{background:var(--brand-wash);border:.5px solid var(--brand-line);
+  border-radius:2px;padding:22px 24px;margin-bottom:var(--card-gap)}
+.paynote.paid,.thanks.paid{background:var(--okbg);border-color:var(--ok-line)}
+.pn-tag{display:inline-block;font-family:'VT323',monospace;font-size:16px;letter-spacing:.2em;
+  line-height:1;padding:8px 14px;border-radius:2px;background:var(--brand-deep);color:var(--brand)}
+.paid .pn-tag{background:var(--okdeep);color:var(--ok)}
+.pn-amt{font-family:'Archivo',sans-serif;font-weight:900;font-size:32px;letter-spacing:-.035em;
+  color:var(--brand);margin-top:16px;line-height:1}
+.pn-amt.big{font-size:38px}
+.paid .pn-amt{color:var(--ok)}
+.pn-txt{font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:14px;
+  padding-top:14px;border-top:.5px dashed var(--brand-line)}
+.paid .pn-txt{border-top-color:var(--ok-line)}
+.pn-txt b{display:block;color:var(--ink);font-weight:700;font-size:15px;margin-bottom:4px}
+@media (min-width:1080px){
+  .paynote,.thanks{padding:28px 32px}
+  .pn-amt{font-size:44px}.pn-amt.big{font-size:52px}
+  .pn-txt{font-size:15px}
+}
 
 /* ---------- sub blocks ---------- */
 .sub{margin-top:26px}
@@ -379,33 +388,29 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
   transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .1s ease}
 
 /* --- nút chính: quét sáng từ trái + mũi tên trượt vào --- */
-.btn{position:relative;overflow:hidden}
-.btn>span,.btn{z-index:0}
-.btn::before{content:"";position:absolute;inset:0;background:#FFD44A;
-  transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:-1}
-.btn.ghost::before,.btn.danger::before{background:var(--brand-wash)}
+.btn{background-image:linear-gradient(#FFD44A,#FFD44A);background-repeat:no-repeat;
+  background-size:0% 100%;background-position:left center;
+  transition:background-size .34s cubic-bezier(.4,0,.2,1),color .2s,border-color .2s,transform .1s}
+.btn.ghost,.btn.danger{background-image:linear-gradient(var(--brand-wash),var(--brand-wash))}
 .btn:active{transform:scale(.985)}
 @media (hover:hover){
-  .btn:hover::before{transform:scaleX(1)}
+  .btn:hover{background-size:100% 100%}
   .btn.ghost:hover,.btn.danger:hover{color:var(--brand);border-color:var(--brand-line)}
 }
 
 /* --- thẻ chọn tên: nền quét + mũi tên hiện ra --- */
-.pick{position:relative;overflow:hidden;padding-right:56px}
-.pick::before{content:"";position:absolute;inset:0;background:var(--brand-wash);
-  transform:scaleX(0);transform-origin:left;transition:transform .34s cubic-bezier(.4,0,.2,1)}
+.pick{position:relative;padding-right:58px;
+  background-image:linear-gradient(var(--brand-wash),var(--brand-wash));
+  background-repeat:no-repeat;background-size:0% 100%;background-position:left center;
+  transition:background-size .34s cubic-bezier(.4,0,.2,1),border-color .2s,transform .1s}
 .pick::after{content:"→";position:absolute;right:22px;top:0;bottom:0;display:flex;align-items:center;
   font-family:'VT323',monospace;font-size:24px;color:var(--brand);
-  opacity:0;margin-right:-10px;transition:opacity .24s ease,margin-right .24s ease}
-.pick>*{position:relative}
-.pick:active{transform:scale(.99)}
-.pick:active::before{transform:scaleX(1)}
-.pick:active::after{opacity:1;margin-right:0}
+  opacity:0;transform:translateX(-8px);transition:opacity .24s ease,transform .24s ease}
+.pick:active{transform:scale(.99);background-size:100% 100%}
+.pick:active::after{opacity:1;transform:none}
 @media (hover:hover){
-  .pick:hover{border-color:var(--brand-line)}
-  .pick:hover::before{transform:scaleX(1)}
-  .pick:hover::after{opacity:1;margin-right:0}
-  .pick:hover .pn{color:var(--ink)}
+  .pick:hover{border-color:var(--brand-line);background-size:100% 100%}
+  .pick:hover::after{opacity:1;transform:none}
   .pick:hover .pr{color:var(--brand-dim)}
 }
 
@@ -462,14 +467,14 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
 }
 
 /* --- nút viền đứt --- */
-.addbtn,.totop{position:relative;overflow:hidden;cursor:pointer}
-.addbtn::before,.totop::before{content:"";position:absolute;inset:0;background:var(--brand-wash);
-  transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.4,0,.2,1)}
-.addbtn>*,.totop>*{position:relative}
-.addbtn:active,.totop:active{transform:scale(.99)}
+.addbtn,.totop{cursor:pointer;
+  background-image:linear-gradient(var(--brand-wash),var(--brand-wash));
+  background-repeat:no-repeat;background-size:0% 100%;background-position:left center;
+  transition:background-size .34s cubic-bezier(.4,0,.2,1),color .2s,border-color .2s,transform .1s}
+.addbtn:active,.totop:active{transform:scale(.99);background-size:100% 100%}
 @media (hover:hover){
-  .addbtn:hover,.totop:hover{border-color:var(--brand-line);color:var(--brand)}
-  .addbtn:hover::before,.totop:hover::before{transform:scaleX(1)}
+  .addbtn:hover,.totop:hover{border-color:var(--brand-line);color:var(--brand);
+    background-size:100% 100%}
 }
 
 /* --- hàng dự án đã hoàn thành --- */
@@ -503,10 +508,8 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
 .mate.lnk .mp{transition:transform .22s ease,color .22s ease}
 
 /* --- chuyển tab --- */
-#body.anim{animation:swapin .3s cubic-bezier(.22,.61,.36,1)}
-@keyframes swapin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.sheet.on .box{animation:sheetup .26s cubic-bezier(.22,.61,.36,1)}
-@keyframes sheetup{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}
+
+
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -584,6 +587,78 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
   letter-spacing:.06em}
 .amt input::placeholder{color:var(--faint);font-size:18px;letter-spacing:.14em}
 .amt input:focus{outline:none;border-color:var(--brand-line)}
+
+/* ---------- thẻ thành viên trong dự án (acc chủ) ---------- */
+.mhead{display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer}
+.av.big{width:44px;height:44px;font-size:14px;background:var(--brand-wash);
+  border-color:var(--brand-line);color:var(--brand)}
+.mtxt{flex:1;min-width:0;display:block}
+.mtxt b{display:block;font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;
+  letter-spacing:-.02em;line-height:1.2}
+.mtxt i{display:block;font-style:normal;font-family:'VT323',monospace;font-size:16px;
+  letter-spacing:.16em;color:var(--brand-dim);margin-top:3px}
+.mpct{font-family:'VT323',monospace;font-size:26px;color:var(--brand);line-height:1}
+.mcard.done .mpct{color:var(--ok)}
+.mgo{font-family:'VT323',monospace;font-size:22px;color:var(--muted);
+  transition:transform .22s ease,color .22s ease}
+@media (hover:hover){.mhead:hover .mtxt b{color:var(--brand)}
+  .mhead:hover .mgo{transform:translateX(4px);color:var(--brand)}}
+.mprog{height:6px;background:var(--surf-2);border-radius:3px;overflow:hidden;margin-top:16px;
+  box-shadow:inset 0 0 0 .5px var(--line)}
+.mprog i{display:block;height:100%;background:var(--brand);border-radius:3px;
+  transition:width .4s cubic-bezier(.22,.61,.36,1)}
+.mcard.done .mprog i{background:var(--ok)}
+.mstat{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.stchip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);
+  background:var(--surf-2);border:.5px solid var(--line);border-radius:2px;padding:6px 11px}
+
+/* ---------- ô nhập tiền ---------- */
+.amt{display:flex;align-items:center;gap:12px;margin-top:18px;background:var(--surf-2);
+  border:.5px solid var(--line);border-radius:2px;padding:0 16px;
+  transition:border-color .2s}
+.amt.filled{border-color:var(--brand-line)}
+.amt:focus-within{border-color:var(--brand-line)}
+.amt-k{font-family:'VT323',monospace;font-size:15px;letter-spacing:.16em;color:var(--faint);
+  white-space:nowrap}
+.amt input{flex:1;min-width:0;background:transparent;border:0;padding:15px 0;
+  font-family:'VT323',monospace;font-size:24px;color:var(--brand);text-align:right;
+  letter-spacing:.04em}
+.amt input:focus{outline:none}
+.amt input::placeholder{color:var(--faint);font-size:17px;letter-spacing:.14em}
+.amt-u{font-family:'VT323',monospace;font-size:22px;color:var(--brand-dim)}
+
+/* ---------- hàng thanh toán + QR ---------- */
+.paylane{display:flex;gap:10px;align-items:stretch;margin-top:12px}
+.paylane .pay{margin-top:0;flex:1}
+.qrbtn{width:62px;flex-shrink:0;background:var(--surf-2);border:.5px solid var(--line);
+  border-radius:2px;font-family:'VT323',monospace;font-size:19px;letter-spacing:.14em;
+  color:var(--brand);transition:border-color .2s,color .2s,background-color .2s}
+.qrbtn.empty{color:var(--faint)}
+@media (hover:hover){.qrbtn:hover{border-color:var(--brand-line);background:var(--brand-wash)}}
+.qrwrap{background:#fff;border-radius:2px;padding:16px;margin-bottom:18px;text-align:center}
+.qrwrap img{max-width:100%;max-height:340px;display:block;margin:0 auto}
+.qrempty,.qrerr{text-align:center;color:var(--muted);font-size:14px;padding:34px 16px;
+  border:.5px dashed var(--line);border-radius:2px;margin-bottom:18px;line-height:1.7}
+.qrnote{font-family:'VT323',monospace;font-size:19px;letter-spacing:.1em;color:var(--brand);
+  text-align:center;margin-bottom:18px}
+
+/* ---------- chuyển tab: thẻ trượt lên theo đợt ---------- */
+#body.anim>*{animation:rise .48s cubic-bezier(.16,.84,.44,1) both}
+#body.anim>*:nth-child(1){animation-delay:0s}
+#body.anim>*:nth-child(2){animation-delay:.05s}
+#body.anim>*:nth-child(3){animation-delay:.09s}
+#body.anim>*:nth-child(4){animation-delay:.13s}
+#body.anim>*:nth-child(5){animation-delay:.17s}
+#body.anim>*:nth-child(6){animation-delay:.21s}
+#body.anim>*:nth-child(7){animation-delay:.24s}
+#body.anim>*:nth-child(n+8){animation-delay:.27s}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* ---------- bảng trượt: mượt hơn ---------- */
+.sheet{opacity:0;pointer-events:none;transition:opacity .24s ease}
+.sheet.on{opacity:1;pointer-events:auto}
+.sheet .box{transform:translateY(40px);transition:transform .38s cubic-bezier(.16,.84,.44,1)}
+.sheet.on .box{transform:none;animation:none}
 
 </style>
 </head>
@@ -663,6 +738,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
   <div class="f"><span class="lb">THỨ TỰ HIỆN TRONG DANH SÁCH</span>
     <input id="m-sort" type="number" inputmode="numeric" value="100"></div>
   <button class="btn" onclick="saveMember()">Lưu</button>
+  <button class="btn ghost" id="m-qr" style="display:none">MÃ QR NGÂN HÀNG</button>
   <button class="btn ghost" id="m-pin" style="display:none" onclick="resetPin()">ĐẶT LẠI MÃ CÁ NHÂN</button>
   <button class="btn ghost" id="m-hide" style="display:none" onclick="toggleActive()">ẨN KHỎI DANH SÁCH</button>
   <button class="btn danger" id="m-del" style="display:none" onclick="delMember()">XOÁ HẲN THÀNH VIÊN</button>
@@ -682,7 +758,6 @@ const STATUS=[{k:'Pending',c:'pd'},{k:'Đang làm',c:'go'},{k:'Chờ feedback n�
               {k:'Đang sửa theo feedback',c:'fx'},{k:'Chờ khách duyệt',c:'cl'},{k:'Đã xong',c:'ok'}];
 const SCOL={pd:'pend',go:'brand',fb:'alert',fx:'violet',cl:'blue',ok:'ok'};
 const TIERS=['Đơn giản','Trung bình','Phức tạp'];
-let CUR='VND';
 
 const mem={};
 const store={
@@ -1005,12 +1080,12 @@ function pheadHTML(p,owner){
     (owner?'<button class="hlink" onclick="openHist(\''+p.id+'\')">LỊCH SỬ LÀM VIỆC ›</button>':'');
 }
 function thanksHTML(paid,amount){
-  const m=(amount!==undefined&&Number(amount)>0)?
-    '<div class="t3">'+money(Number(amount))+'</div>':'';
+  const has=(amount!==undefined&&amount!==null&&Number(amount)>0);
   return '<div class="thanks'+(paid?' paid':'')+'">'+
-    '<div class="tk"><div class="t1">🎉 '+(paid?'Đã thanh toán':'Đã hoàn thành')+'</div>'+
-    '<div class="t2">Cảm ơn bạn đã giúp Khỉ &lt;3</div>'+m+'</div>'+
-    '<span class="paypill'+(paid?' paid':'')+'">'+(paid?'✓ ĐÃ NHẬN TIỀN':'⏳ CHỜ CHUYỂN KHOẢN')+'</span></div>';
+    '<span class="pn-tag">'+(paid?'✓ ĐÃ NHẬN TIỀN':'⏳ CHỜ CHUYỂN KHOẢN')+'</span>'+
+    (has?'<div class="pn-amt big">'+money(Number(amount))+'</div>':'')+
+    '<div class="pn-txt"><b>🎉 '+(paid?'Đã thanh toán':'Đã hoàn thành')+'</b>'+
+    'Cảm ơn bạn đã giúp Khỉ &lt;3</div></div>';
 }
 function filesBlock(pid,owner){
   const ls=D.links.filter(l=>l.project_id===pid);
@@ -1042,8 +1117,7 @@ function memTabs(){
   const a=D.projects.length, b=(D.done_projects||[]).length;
   return '<div class="obar two">'+
     '<button aria-pressed="'+(memView==='active')+'" onclick="setMemView(\'active\')">ĐANG THAM GIA · '+a+'</button>'+
-    '<button aria-pressed="'+(memView==='done')+'" onclick="setMemView(\'done\')">ĐÃ HOÀN THÀNH · '+b+'</button></div>'+
-    '<button class="curbtn" onclick="toggleCur()">ĐANG XEM THEO '+CUR+' — ĐỔI</button>';
+    '<button aria-pressed="'+(memView==='done')+'" onclick="setMemView(\'done\')">ĐÃ HOÀN THÀNH · '+b+'</button></div>';
 }
 function swapAnim(){const el=document.getElementById('body');
   el.classList.remove('anim'); void el.offsetWidth; el.classList.add('anim');}
@@ -1071,15 +1145,17 @@ function renderMember(){
       if(!ts.length)return;
       const mine=ts.every(t=>t.status==='Đã xong');
       const paid=p.paid===true;
+      const mm=(p.amount==null?null:Number(p.amount));
       let note='';
-      const mm=(p.amount==null?0:Number(p.amount));
-      const mmTxt=mm>0?'<b class="pmoney">'+money(mm)+'</b>':'';
-      if(paid) note='<div class="paynote paid"><span>✓ ĐÃ NHẬN TIỀN</span>'+mmTxt+
-        '<em>Cảm ơn bạn đã giúp Khỉ &lt;3<br>'+
-        'DG Monkey đã thanh toán phần việc của bạn ở dự án này.</em></div>';
-      else if(mine) note='<div class="paynote"><span>⏳ CHỜ CHUYỂN KHOẢN</span>'+mmTxt+
-        '<em>Cảm ơn bạn đã giúp Khỉ &lt;3<br>'+
-        'Bạn đã xong phần của mình. Dự án còn người khác nên chưa đóng.</em></div>';
+      if(paid||mine){
+        note='<div class="paynote'+(paid?' paid':'')+'">'+
+          '<span class="pn-tag">'+(paid?'✓ ĐÃ NHẬN TIỀN':'⏳ CHỜ CHUYỂN KHOẢN')+'</span>'+
+          (mm!=null?'<div class="pn-amt">'+money(mm)+'</div>':'')+
+          '<div class="pn-txt"><b>Cảm ơn bạn đã giúp Khỉ &lt;3</b>'+
+          (paid?'DG Monkey đã thanh toán phần việc của bạn ở dự án này.'
+               :'Bạn đã xong phần của mình. Dự án còn người khác nên chưa đóng.')+
+          '</div></div>';
+      }
       h+='<section class="proj">'+pheadHTML(p,false)+note+
          '<div class="cards">'+ts.map(t=>taskHTML(t,false)).join('')+'</div>'+
          filesBlock(p.id,false)+matesHTML(p.id)+'</section>';
@@ -1140,9 +1216,11 @@ const mRole=id=>{const m=D.members.find(x=>x.id===id);return m?m.role:'';};
 
 function amtBox(pid,mid){
   const a=payAmount(pid,mid);
-  return '<label class="amt"><span class="lb">TIỀN CÔNG (VND)</span>'+
+  return '<div class="amt'+(a==null?'':' filled')+'">'+
+    '<span class="amt-k">TIỀN CÔNG</span>'+
     '<input type="text" inputmode="numeric" value="'+(a==null?'':a.toLocaleString('vi-VN'))+'" '+
-    'placeholder="chưa nhập" onchange="saveAmount(\''+pid+'\',\''+mid+'\',this.value)"></label>';
+    'placeholder="chưa nhập" onchange="saveAmount(\''+pid+'\',\''+mid+'\',this.value)">'+
+    '<span class="amt-u">₫</span></div>';
 }
 async function saveAmount(pid,mid,v){
   const n=String(v).replace(/[^0-9]/g,'');
@@ -1162,7 +1240,7 @@ function renderOwner(){
     '<button aria-pressed="'+(ownerView==='team')+'" onclick="setOwnerView(\'team\')">TOÀN TEAM</button>'+
     '<button aria-pressed="'+(ownerView==='files')+'" onclick="setOwnerView(\'files\')">FILE</button>'+
     '<button aria-pressed="'+(ownerView==='arch')+'" onclick="setOwnerView(\'arch\')">ĐÃ XONG</button>'+
-    '<button aria-pressed="'+(ownerView==='mem')+'" onclick="setOwnerView(\'mem\')">NGƯỜI</button>'+
+    '<button aria-pressed="'+(ownerView==='mem')+'" onclick="setOwnerView(\'mem\')">THÀNH VIÊN</button>'+
     '</div>';
   if(ownerView==='files')return renderFiles();
   if(ownerView==='arch')return renderArchive();
@@ -1180,22 +1258,31 @@ function renderOwner(){
     h+= keys.length ? keys.map(function(mid){
       const list=by[mid];
       const qq=list.reduce((s,t)=>s+t.qty,0), dd=list.reduce((s,t)=>s+t.done,0);
+      const pct=qq?Math.round(dd/qq*100):0;
       const stg=[...new Set(list.map(t=>t.stage))];
+      const sts=[...new Set(list.map(t=>t.status))];
       const allDone=list.every(t=>t.status==='Đã xong');
-
-      return '<article class="task'+(allDone?' done':'')+'">'+
+      const mb=D.members.find(x=>x.id===mid)||{};
+      return '<article class="task mcard'+(allDone?' done':'')+'">'+
         '<div class="thead"><span class="stage '+(SCLS[stg[0]]||'')+'">'+stg.join(' + ').toUpperCase()+'</span>'+
-
         (allDone?'<span class="minitag">XONG</span>':'')+
-        '<span class="tct">'+dd+'/'+qq+'</span></div><div class="tbody">'+
-        '<button class="mate lnk" onclick="ownerOpen(\''+p.id+'\',\''+mid+'\')">'+
-        '<span class="av">'+ini(mName(mid))+'</span>'+
-        '<span class="mi"><span class="mn">'+H(mName(mid))+'<u>'+H(mRole(mid)).toUpperCase()+'</u></span>'+
-        '<span class="mb"><i class="b" style="width:'+(qq?(dd/qq*100).toFixed(1):0)+'%"></i></span></span>'+
-        '<span class="mp">›</span></button>'+
-        amtBox(p.id,mid)+
-        '<button class="pay'+(isPaid(p.id,mid)?' on':'')+'" onclick="togglePay(\''+p.id+'\',\''+mid+'\','+isPaid(p.id,mid)+')">'+
-        '<i class="bx"></i><span>'+(isPaid(p.id,mid)?'ĐÃ THANH TOÁN':'CHƯA THANH TOÁN')+'</span></button>'+
+        '<span class="tct">'+dd+'/'+qq+'</span></div>'+
+        '<div class="tbody">'+
+          '<button class="mhead" onclick="ownerOpen(\''+p.id+'\',\''+mid+'\')">'+
+            '<span class="av big">'+ini(mName(mid))+'</span>'+
+            '<span class="mtxt"><b>'+H(mName(mid))+'</b><i>'+H(mRole(mid)).toUpperCase()+'</i></span>'+
+            '<span class="mpct">'+pct+'%</span><span class="mgo">›</span>'+
+          '</button>'+
+          '<div class="mprog"><i style="width:'+pct+'%"></i></div>'+
+          '<div class="mstat">'+sts.map(function(x){
+              return '<span class="stchip"><i class="sq '+stc(x)+'"></i>'+x+'</span>';}).join('')+'</div>'+
+          amtBox(p.id,mid)+
+          '<div class="paylane">'+
+            '<button class="pay'+(isPaid(p.id,mid)?' on':'')+'" onclick="togglePay(\''+p.id+'\',\''+mid+'\','+isPaid(p.id,mid)+')">'+
+            '<i class="bx"></i><span>'+(isPaid(p.id,mid)?'ĐÃ THANH TOÁN':'CHƯA THANH TOÁN')+'</span></button>'+
+            '<button class="qrbtn'+(mb.qr_url?'':' empty')+'" title="Mã QR ngân hàng" '+
+            'onclick="openQR(\''+mid+'\')">QR</button>'+
+          '</div>'+
         '</div></article>';
     }).join('') : '<article class="task"><div class="tbody"><p class="desc muted">Chưa phân việc cho ai.</p></div></article>';
     h+='</div>'+filesBlock(p.id,true)+
@@ -1258,7 +1345,8 @@ function renderMembers(){
       '<span class="tct">'+d+'/'+q+'</span></div>'+
       '<div class="tbody"><p class="desc">'+H(m.name)+(m.active?'':' <span class="muted">· đang ẩn</span>')+'</p>'+
       '<p class="dsub">'+projs+' dự án · '+ts.length+' đầu việc · '+
-      (m.pin_hash?'đã đặt mã':'chưa đặt mã')+'</p></div></article>';
+      (m.pin_hash?'đã đặt mã':'chưa đặt mã')+' · '+
+      (m.qr_url?'có QR':'chưa có QR')+'</p></div></article>';
   }
   h+=on.map(card).join('');
   if(off.length) h+=off.map(card).join('');
@@ -1266,6 +1354,31 @@ function renderMembers(){
   document.getElementById('body').innerHTML=h;
 }
 
+
+function openQR(mid){
+  const m=D.members.find(x=>x.id===mid); if(!m)return;
+  const has=!!m.qr_url;
+  document.getElementById('box1').innerHTML=
+    '<h3>MÃ QR NGÂN HÀNG</h3><p class="ssub">'+H(m.name)+'</p>'+
+    (has?'<div class="qrwrap"><img src="'+H(m.qr_url)+'" alt="QR '+H(m.name)+'" '+
+         'onerror="this.parentNode.innerHTML=\'<div class=&quot;qrerr&quot;>Không tải được ảnh. Kiểm tra lại link.</div>\'"></div>'
+        :'<div class="qrempty">Chưa có mã QR.<br>Dán link ảnh QR vào ô bên dưới.</div>')+
+    (m.bank_note?'<div class="qrnote">'+H(m.bank_note)+'</div>':'')+
+    '<div class="f"><span class="lb">LINK ẢNH QR</span>'+
+    '<input id="qr-url" type="url" inputmode="url" placeholder="https://..." value="'+H(m.qr_url||'')+'"></div>'+
+    '<div class="f"><span class="lb">GHI CHÚ (số tài khoản, tên ngân hàng…)</span>'+
+    '<input id="qr-note" placeholder="VD: Vietcombank — 0123456789" value="'+H(m.bank_note||'')+'"></div>'+
+    '<button class="btn" onclick="saveQR(\''+mid+'\')">Lưu</button>'+
+    '<button class="btn ghost" onclick="close1()">ĐÓNG</button>';
+  document.getElementById('sh1').classList.add('on');
+}
+async function saveQR(mid){
+  const u=val('qr-url').trim(), n=val('qr-note').trim();
+  sync('busy'); close1();
+  try{await db('members?id=eq.'+mid,{method:'PATCH',
+    body:JSON.stringify({qr_url:u||null,bank_note:n||null})});await reload();}
+  catch(e){sync('off');alert('Không lưu được.');}
+}
 
 function openHist(pid){
   const p=D.projects.find(x=>x.id===pid);
@@ -1422,6 +1535,8 @@ function openMb(id){
   const hb=document.getElementById('m-hide');
   hb.style.display=id?'block':'none';
   if(m) hb.textContent=m.active?'ẨN KHỎI DANH SÁCH':'HIỆN LẠI TRONG DANH SÁCH';
+  const qb=document.getElementById('m-qr'); qb.style.display=id?'block':'none';
+  qb.onclick=function(){closeMb();openQR(id);};
   document.getElementById('msheet').classList.add('on');
 }
 function closeMb(){document.getElementById('msheet').classList.remove('on');}
