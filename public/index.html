@@ -721,6 +721,14 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
   box-shadow:inset 0 0 0 .5px var(--brand-line)}
 .f textarea::placeholder{color:var(--faint)}
 
+/* chống tràn chữ khi gặp chuỗi dài không khoảng trắng */
+.tnote,.desc,.tname,.dsub,.pn-txt,.mnote,.hm,.dn,.mtxt b,.pb-n,.gn,
+.arch .an2,.phead h2,.thanks,.paynote,.qrnote,.empty,.ssub,.stchip{
+  overflow-wrap:anywhere;word-break:break-word;min-width:0}
+.file .fn,.file .fu{overflow-wrap:normal;word-break:normal}
+.task,.tbody,.tnote,.paynote,.thanks,.paybox{max-width:100%}
+.tnote{overflow:hidden}
+
 </style>
 </head>
 <body>
