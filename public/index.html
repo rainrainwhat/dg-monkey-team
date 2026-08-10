@@ -707,6 +707,20 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
 .qrprog.err{color:var(--alert)}
 .qrprog.ok{color:var(--ok)}
 
+/* ghi chú trên thẻ đầu việc */
+.tnote{margin-top:12px;padding:11px 13px;background:var(--surf-2);
+  border-left:2px solid var(--brand-line);border-radius:2px;
+  font-size:13px;color:var(--muted);line-height:1.55}
+.tnote span{display:block;font-family:'VT323',monospace;font-size:14px;letter-spacing:.18em;
+  color:var(--brand-dim);margin-bottom:4px}
+@media (min-width:1080px){.tnote{font-size:14px;padding:13px 16px}}
+.f textarea{width:100%;background:var(--surf);border:.5px solid var(--line);border-radius:2px;
+  padding:14px;font-family:'Archivo',sans-serif;font-size:15px;font-weight:500;color:var(--ink);
+  resize:vertical;min-height:64px;line-height:1.5}
+.f textarea:focus{outline:none;border-color:var(--brand-line);
+  box-shadow:inset 0 0 0 .5px var(--brand-line)}
+.f textarea::placeholder{color:var(--faint)}
+
 </style>
 </head>
 <body>
@@ -753,6 +767,8 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:.5px 
     <div class="f"><span class="lb">SỐ LƯỢNG</span><input id="k-qty" type="number" inputmode="numeric" value="1" min="1"></div>
   </div>
   <div class="f"><span class="lb">GIAO CHO</span><select id="k-who"></select></div>
+  <div class="f"><span class="lb">GHI CHÚ CHO NGƯỜI LÀM (không bắt buộc)</span>
+    <textarea id="k-note" rows="2" placeholder="VD: nhớ giữ style giống nhân vật cũ"></textarea></div>
   <button class="btn" onclick="saveTask()">Lưu</button>
   <button class="btn danger" id="k-del" style="display:none" onclick="delTask()">XOÁ ĐẦU VIỆC NÀY</button>
   <button class="btn ghost" onclick="closeTk()">HUỶ</button>
@@ -1103,10 +1119,12 @@ function taskHTML(t,owner){
   const ticked=t.done>=t.qty&&t.qty>0;
   return '<article class="task'+(fin?' done':'')+'">'+
     '<div class="thead"><span class="stage '+(SCLS[t.stage]||'')+'">'+t.stage.toUpperCase()+'</span>'+
-    (owner?'<button class="xb" title="Xoá" onclick="quickDelTask(\''+t.id+'\')">✕</button>':'')+
+    (owner?'<button class="xb" title="Sửa" onclick="close1();openTk(\''+t.id+'\')">✎</button>'+
+           '<button class="xb" title="Xoá" onclick="quickDelTask(\''+t.id+'\')">✕</button>':'')+
     '<span class="tct">'+t.done+'/'+t.qty+'</span></div>'+
     '<div class="tbody">'+
     '<p class="desc">'+H(t.title)+'</p>'+
+    (t.note?'<div class="tnote"><span>GHI CHÚ</span>'+H(t.note).replace(/\n/g,'<br>')+'</div>':'')+
     '<div class="blk"><span class="lb">ĐÃ XONG BAO NHIÊU</span>'+stripHTML(t)+'</div>'+
     '<div class="blk"><span class="lb">TIẾN TRÌNH</span>'+
     '<button class="stsel'+((ticked&&!fin)?' nudge':'')+'" onclick="openSt(\''+t.id+'\')">'+
@@ -1571,19 +1589,20 @@ function openTk(id,pid){
 function closeTk(){document.getElementById('tksheet').classList.remove('on');}
 async function saveTask(){
   const project_id=val('k-proj'),title=val('k-item').trim(),stage=val('k-stage'),
-        qty=Math.max(1,parseInt(val('k-qty'))||1),member_id=val('k-who');
+        qty=Math.max(1,parseInt(val('k-qty'))||1),member_id=val('k-who'),
+        note=val('k-note').trim()||null;
   if(!title){document.getElementById('k-item').focus();return;}
   const id=editing; closeTk(); sync('busy');
   try{
     if(id){
       const t=D.tasks.find(x=>x.id===id);
       await db('tasks?id=eq.'+id,{method:'PATCH',body:JSON.stringify({project_id:project_id,
-        title:title,stage:stage,qty:qty,member_id:member_id,
+        title:title,stage:stage,qty:qty,member_id:member_id,note:note,
         done:Math.min(t.done,qty),updated_at:new Date().toISOString()})});
       await addHist(project_id,'Sửa đầu việc '+title);
     }else{
       await db('tasks',{method:'POST',body:JSON.stringify({project_id:project_id,title:title,
-        stage:stage,qty:qty,member_id:member_id,done:0,status:'Pending'})});
+        stage:stage,qty:qty,member_id:member_id,note:note,done:0,status:'Pending'})});
       await addHist(project_id,'Thêm đầu việc '+title+' cho '+mName(member_id));
     }
     await reload();
